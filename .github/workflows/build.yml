@@ -22,13 +22,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .buildozer_global
-          key: buildozer-global-${{ hashFiles('buildozer.spec') }}
+          key: buildozer-global-${{ hashFiles('buildozer.spec', '.github/workflows/build.yml') }}
+          restore-keys: |
+            buildozer-global-
 
       - name: Cache Buildozer directory
         uses: actions/cache@v4
         with:
           path: .buildozer
-          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
+          key: ${{ runner.os }}-buildozer-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec', 'requirements') }}
+          restore-keys: |
+            ${{ runner.os }}-buildozer-${{ steps.get-date.outputs.date }}-
+            ${{ runner.os }}-buildozer-
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -50,15 +55,48 @@ jobs:
 
       - name: Install python dependencies
         run: |
-          pip install --upgrade pip Cython virtualenv
+          pip install --upgrade pip
+          pip install Cython==0.29.32 virtualenv
+          pip install python-for-android==2024.1214
           pip install buildozer
+
+      - name: Print Python and p4a headers (DEBUG)
+        run: |
+          python -V
+          pip show python-for-android Cython buildozer || true
+          ls -la .buildozer || true
+          find .buildozer -maxdepth 4 -type d -name "python3*" -exec sh -c 'echo "=== {}"; ls -la {}/include || true' \; 2>/dev/null || true
 
       - name: Build with Buildozer
         run: |
           yes | buildozer android debug
 
+      - name: Verify APK was created
+        run: |
+          ls -lah bin/*.apk 2>/dev/null && echo "✓ APK created successfully" || (echo "✗ APK not found" && exit 1)
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: package
           path: bin/*.apk
+          if-no-files-found: ignore
+
+      - name: Collect build logs on failure
+        if: failure()
+        run: |
+          mkdir -p build_logs
+          cp -r .buildozer/android/platform/build/*/dists/*/build/outputs/* build_logs/ 2>/dev/null || true
+          cp .buildozer/applibs-android.txt build_logs/ 2>/dev/null || true
+          find .buildozer -name "*.log" -type f -exec cp {} build_logs/ \; 2>/dev/null || true
+          tar -czf ci_build_logs.tar.gz build_logs/
+          ls -lh ci_build_logs.tar.gz || true
+
+      - name: Upload build logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: ci_build_logs.tar.gz
+          if-no-files-found: ignore
