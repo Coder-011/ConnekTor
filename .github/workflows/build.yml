@@ -57,7 +57,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install Cython==0.29.32 virtualenv
-          pip install python-for-android==2024.1214
+          pip install python-for-android==2024.1.21
           pip install buildozer
 
       - name: Print Python and p4a headers (DEBUG)
