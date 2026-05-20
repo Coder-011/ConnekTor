@@ -40,6 +40,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Ensure compatible 'sh' package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "sh<2.0,>=1.10"
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -55,17 +60,22 @@ jobs:
 
       - name: Install python dependencies
         run: |
-          pip install --upgrade pip
-          pip install Cython==0.29.32 virtualenv
-          pip install python-for-android==2024.1.21
-          pip install buildozer
+          python -m pip install --upgrade pip
+          python -m pip install Cython==0.29.37 virtualenv
+          python -m pip install python-for-android==2024.1.21
+          python -m pip install buildozer
 
       - name: Print Python and p4a headers (DEBUG)
         run: |
           python -V
-          pip show python-for-android Cython buildozer || true
+          python -m pip show python-for-android Cython buildozer sh || true
           ls -la .buildozer || true
           find .buildozer -maxdepth 4 -type d -name "python3*" -exec sh -c 'echo "=== {}"; ls -la {}/include || true' \; 2>/dev/null || true
+
+      - name: Clean buildozer caches
+        run: |
+          rm -rf .buildozer .buildozer_global bin || true
+          python -m pip cache purge || true
 
       - name: Build with Buildozer
         run: |
