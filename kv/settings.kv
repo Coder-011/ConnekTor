@@ -1,0 +1,151 @@
+<SettingsScreen>:
+    md_bg_color: 0.05, 0.055, 0.10, 1
+    
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: "20dp"
+        spacing: "20dp"
+        
+        MDLabel:
+            text: "Settings"
+            font_style: "H5"
+            bold: True
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+            size_hint_y: None
+            height: "40dp"
+            
+        MDLabel:
+            text: "APPEARANCE & BEHAVIOR"
+            font_style: "Caption"
+            theme_text_color: "Custom"
+            text_color: app.accent_color_rgba
+            size_hint_y: None
+            height: "20dp"
+            
+        MDCard:
+            orientation: 'vertical'
+            padding: "15dp"
+            spacing: "10dp"
+            md_bg_color: 0.086, 0.094, 0.16, 1
+            radius: [15,]
+            size_hint_y: None
+            height: "130dp"
+            
+            MDBoxLayout:
+                MDLabel:
+                    text: "Light Theme"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                MDSwitch:
+                    id: theme_switch
+                    on_active: root.on_theme_toggle(*args)
+                    
+            MDSeparator:
+                
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.7
+                MDLabel:
+                    text: "Auto Login"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                MDLabel:
+                    text: "Connect when WiFi is available"
+                    font_style: "Caption"
+                    theme_text_color: "Custom"
+                    text_color: 0.557, 0.557, 0.627, 1
+            
+            MDAnchorLayout:
+                size_hint_x: 0.3
+                anchor_x: "right"
+                MDSwitch:
+                    id: auto_login_switch
+                    on_active: root.on_auto_login_toggle(*args)
+                    
+            MDSeparator:
+                
+            MDBoxLayout:
+                orientation: 'vertical'
+                MDLabel:
+                    text: "Accent Color"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                
+                # A row of color swatches
+                MDBoxLayout:
+                    spacing: "10dp"
+                    padding: "5dp", 0, 0, 0
+                    
+                    MDIconButton:
+                        icon: "circle"
+                        theme_text_color: "Custom"
+                        text_color: 0.357, 0.42, 0.96, 1
+                        on_release: root.on_accent_color_select("Blue")
+                        
+                    MDIconButton:
+                        icon: "circle"
+                        theme_text_color: "Custom"
+                        text_color: 0.61, 0.35, 0.96, 1
+                        on_release: root.on_accent_color_select("Purple")
+                        
+                    MDIconButton:
+                        icon: "circle"
+                        theme_text_color: "Custom"
+                        text_color: 0.18, 0.835, 0.45, 1
+                        on_release: root.on_accent_color_select("Green")
+                        
+                    MDIconButton:
+                        icon: "circle"
+                        theme_text_color: "Custom"
+                        text_color: 1.0, 0.278, 0.34, 1
+                        on_release: root.on_accent_color_select("Red")
+                        
+                    MDIconButton:
+                        icon: "circle"
+                        theme_text_color: "Custom"
+                        text_color: 1.0, 0.647, 0.008, 1
+                        on_release: root.on_accent_color_select("Orange")
+                        
+                    MDIconButton:
+                        icon: "circle"
+                        theme_text_color: "Custom"
+                        text_color: 1.0, 0.4, 0.7, 1
+                        on_release: root.on_accent_color_select("Pink")
+                    
+        MDLabel:
+            text: "SYSTEM INFO"
+            font_style: "Caption"
+            theme_text_color: "Custom"
+            text_color: app.accent_color_rgba
+            size_hint_y: None
+            height: "20dp"
+            
+        MDCard:
+            orientation: 'vertical'
+            padding: "15dp"
+            spacing: "5dp"
+            md_bg_color: 0.086, 0.094, 0.16, 1
+            radius: [15,]
+            size_hint_y: None
+            height: "80dp"
+            
+            MDBoxLayout:
+                MDLabel:
+                    text: "Version: 3.0.0 Elite Build"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                MDLabel:
+                    text: "STABLE"
+                    theme_text_color: "Custom"
+                    text_color: 0.18, 0.835, 0.45, 1
+                    halign: "right"
+                    bold: True
+                    
+            MDLabel:
+                text: "Made by: Anup Aryal"
+                theme_text_color: "Custom"
+                text_color: 0.557, 0.557, 0.627, 1
+                
+        Widget:
+            size_hint_y: 1

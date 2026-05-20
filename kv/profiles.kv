@@ -1,0 +1,90 @@
+<ProfilesScreen>:
+    md_bg_color: 0.05, 0.055, 0.10, 1
+    
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: "20dp"
+        spacing: "20dp"
+        
+        MDLabel:
+            text: "Profiles"
+            font_style: "H5"
+            bold: True
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+            size_hint_y: None
+            height: "40dp"
+            
+        MDBoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            spacing: "10dp"
+            
+            MDRaisedButton:
+                text: "P1"
+                md_bg_color: root.get_tab_color(0, root.active_tab)
+                on_release: root.switch_tab(0)
+                size_hint_x: 1
+            MDRaisedButton:
+                text: "P2"
+                md_bg_color: root.get_tab_color(1, root.active_tab)
+                on_release: root.switch_tab(1)
+                size_hint_x: 1
+            MDRaisedButton:
+                text: "P3"
+                md_bg_color: root.get_tab_color(2, root.active_tab)
+                on_release: root.switch_tab(2)
+                size_hint_x: 1
+                
+        MDCard:
+            orientation: 'vertical'
+            padding: "20dp"
+            spacing: "15dp"
+            md_bg_color: 0.086, 0.094, 0.16, 1
+            radius: [15,]
+            size_hint_y: None
+            height: "280dp"
+            
+            MDTextField:
+                id: profile_name
+                hint_text: "Profile Name"
+                text_color_normal: 1, 1, 1, 1
+                hint_text_color_normal: 0.557, 0.557, 0.627, 1
+                
+            MDTextField:
+                id: username
+                hint_text: "Username (e.g. 082bel013)"
+                text_color_normal: 1, 1, 1, 1
+                hint_text_color_normal: 0.557, 0.557, 0.627, 1
+                
+            MDTextField:
+                id: password
+                hint_text: "Password"
+                password: True
+                text_color_normal: 1, 1, 1, 1
+                hint_text_color_normal: 0.557, 0.557, 0.627, 1
+                
+            Widget:
+                size_hint_y: 1
+                
+            MDRaisedButton:
+                text: "Save Changes"
+                md_bg_color: app.accent_color_rgba
+                pos_hint: {"center_x": .5}
+                on_release: root.save_current_profile()
+                
+        Widget:
+            size_hint_y: 1
+                
+        MDCard:
+            size_hint_y: None
+            height: "80dp"
+            md_bg_color: 0.086, 0.094, 0.16, 1
+            radius: [15,]
+            padding: "15dp"
+            
+            MDLabel:
+                text: "Pro Tip: Use descriptive names for your profiles so you know which one is active."
+                theme_text_color: "Custom"
+                text_color: 0.557, 0.557, 0.627, 1
+                font_style: "Caption"
