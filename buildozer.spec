@@ -5,7 +5,7 @@ package.domain = org.citpc
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,ttf,otf,json,ini
 version = 4.0.0
-requirements = kivy==2.3.0,kivymd,requests,certifi,chardet,charset-normalizer,urllib3,idna,six,filetype
+requirements = python3==3.10.13,kivy==2.3.0,kivymd,requests,certifi,chardet,charset-normalizer,urllib3,idna,six,filetype
 orientation = portrait
 fullscreen = 0
 android.permissions = INTERNET,ACCESS_WIFI_STATE,CHANGE_WIFI_STATE,ACCESS_NETWORK_STATE,CHANGE_NETWORK_STATE
